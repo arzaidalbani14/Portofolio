@@ -6,9 +6,11 @@ import Projects from './components/sections/Projects';
 import Education from './components/sections/Education';
 import Footer from './components/layout/Footer';
 
+
 function App() {
     return (
         <div className="font-sans text-primary">
+
             <Navbar />
             <main>
                 <Hero />

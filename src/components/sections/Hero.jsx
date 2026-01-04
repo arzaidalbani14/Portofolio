@@ -6,7 +6,7 @@ const Hero = () => {
     const profileImage = "https://placehold.co/400x400/074799/E1FFBB?text=Profile";
 
     return (
-        <section id="#" className="min-h-screen pt-16 flex items-center justify-center overflow-hidden relative">
+        <section id="#" className="min-h-[600px] py-32 flex items-center justify-center overflow-hidden relative">
             {/* Background blobs for "rich aesthetics" */}
             <div className="absolute top-20 left-10 w-72 h-72 bg-accent/20 rounded-full blur-3xl -z-10 animate-pulse" />
             <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl -z-10" />
@@ -22,7 +22,7 @@ const Hero = () => {
                             transition={{ duration: 0.5 }}
                             className="text-2xl font-medium text-accent mb-2"
                         >
-                            Welcome text
+                            Welcome to my Portfolio
                         </motion.h2>
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
@@ -30,7 +30,7 @@ const Hero = () => {
                             transition={{ duration: 0.5, delay: 0.2 }}
                             className="text-5xl md:text-7xl font-bold text-primary mb-6"
                         >
-                            My name is <span className="text-secondary brightness-125">Zaid</span>
+                            Hi! I'm Zaid <span className="text-secondary brightness-125">Web Developer</span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -40,7 +40,7 @@ const Hero = () => {
                         >
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, justo at commodo fermentum,
                             nisl diam maximus lorem, sed venenatis quam lorem accumsan est. Duis quis pharetra elit.
-                            Nulla facilisi.
+                            Nulla.
                         </motion.p>
 
                         <motion.div

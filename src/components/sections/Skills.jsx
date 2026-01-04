@@ -36,7 +36,7 @@ const SkillCircle = ({ percentage, title, icon: Icon, delay }) => {
                         stroke="currentColor"
                         strokeWidth="8"
                         fill="transparent"
-                        className="text-accent drop-shadow-[0_0_15px_rgba(0,153,144,0.6)]"
+                        className="text-accent drop-shadow-[0_0_15px_rgba(216,205,55,0.6)]"
                         strokeDasharray={circumference}
                         initial={{ strokeDashoffset: circumference }}
                         whileInView={{ strokeDashoffset }}
@@ -67,24 +67,29 @@ const Skills = () => {
     return (
         <section id="skills" className="py-20 bg-background">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Display My Skills</h2>
-                    <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
-                </motion.div>
+                <div className="bg-secondary/10 backdrop-blur-md rounded-[3rem] p-8 md:p-16 border border-accent/40 relative overflow-hidden">
+                    {/* Decorative gradient */}
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent opacity-30 pointer-events-none" />
 
-                <div className="flex flex-wrap justify-center gap-16 md:gap-32">
-                    {skills.map((skill, index) => (
-                        <SkillCircle
-                            key={skill.title}
-                            {...skill}
-                            delay={index * 0.2}
-                        />
-                    ))}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center mb-16 relative z-10"
+                    >
+                        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Display My Skills</h2>
+                        <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
+                    </motion.div>
+
+                    <div className="flex flex-wrap justify-center gap-16 md:gap-32 relative z-10">
+                        {skills.map((skill, index) => (
+                            <SkillCircle
+                                key={skill.title}
+                                {...skill}
+                                delay={index * 0.2}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>
