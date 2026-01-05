@@ -13,14 +13,14 @@ const ProjectCard = ({ title, image, index }) => {
             className="group flex flex-col bg-secondary/20 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-primary/10 h-full transform-gpu"
         >
             {/* Header: Project Name */}
-            <div className="p-4 border-b border-primary/10 bg-white/5 flex justify-between items-center">
-                <h3 className="text-lg font-bold text-primary truncate pr-4">{title}</h3>
+            <div className="p-4 border-b border-primary/10 bg-accent flex justify-between items-center">
+                <h3 className="text-lg font-bold text-background truncate pr-4">{title}</h3>
                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <motion.a
                         href="#"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className="text-gray-400 hover:text-accent"
+                        className="text-background/70 hover:text-background transition-colors"
                     >
                         <Github size={18} />
                     </motion.a>
@@ -28,7 +28,7 @@ const ProjectCard = ({ title, image, index }) => {
                         href="#"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
-                        className="text-gray-400 hover:text-accent"
+                        className="text-background/70 hover:text-background transition-colors"
                     >
                         <ExternalLink size={18} />
                     </motion.a>
