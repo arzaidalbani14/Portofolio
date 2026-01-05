@@ -30,7 +30,26 @@ const Hero = () => {
                             transition={{ duration: 0.5, delay: 0.2 }}
                             className="text-5xl md:text-7xl font-bold text-primary mb-6"
                         >
-                            Hi! I'm Zaid <span className="text-secondary brightness-125">Web Developer</span>
+                            Hi! I'm Zaid
+                            <motion.span
+                                className="text-secondary brightness-125 block mt-2"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.5, delay: 0.5 }}
+                            >
+                                <Typewriter
+                                    texts={[
+                                        "Web Developer",
+                                        "Web Designer",
+                                        "Front End Developer",
+                                        "Back End Developer",
+                                        "Full Stack Developer"
+                                    ]}
+                                    delay={70}
+                                    deleteDelay={40}
+                                    waitTime={800}
+                                />
+                            </motion.span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
@@ -98,6 +117,55 @@ const Hero = () => {
                 </div>
             </div>
         </section>
+    );
+};
+
+// Advanced Typewriter Component with Stop Logic
+const Typewriter = ({ texts, delay = 100, deleteDelay = 50, waitTime = 2000 }) => {
+    const [currentText, setCurrentText] = React.useState('');
+    const [isDeleting, setIsDeleting] = React.useState(false);
+    const [loopNum, setLoopNum] = React.useState(0);
+    const [typingSpeed, setTypingSpeed] = React.useState(delay);
+    const [isStopped, setIsStopped] = React.useState(false);
+
+    React.useEffect(() => {
+        if (isStopped) return;
+
+        const handleTyping = () => {
+            const i = loopNum % texts.length;
+            const fullText = texts[i];
+            const isLastItem = i === texts.length - 1;
+
+            setCurrentText(isDeleting
+                ? fullText.substring(0, currentText.length - 1)
+                : fullText.substring(0, currentText.length + 1)
+            );
+
+            setTypingSpeed(isDeleting ? deleteDelay : delay);
+
+            if (!isDeleting && currentText === fullText) {
+                if (isLastItem) {
+                    setIsStopped(true);
+                    return; // Stop the animation cycle
+                }
+                // Finished typing, wait before deleting
+                setTimeout(() => setIsDeleting(true), waitTime);
+            } else if (isDeleting && currentText === '') {
+                // Finished deleting, move to next text
+                setIsDeleting(false);
+                setLoopNum(loopNum + 1);
+            }
+        };
+
+        const timer = setTimeout(handleTyping, typingSpeed);
+        return () => clearTimeout(timer);
+    }, [currentText, isDeleting, loopNum, texts, delay, deleteDelay, waitTime, typingSpeed, isStopped]);
+
+    return (
+        <span>
+            {currentText}
+            {!isStopped && <span className="animate-pulse">|</span>}
+        </span>
     );
 };
 

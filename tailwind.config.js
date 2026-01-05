@@ -7,12 +7,12 @@ export default {
     theme: {
         extend: {
             colors: {
-                background: '#050c20ff', // Deep Blue
-                primary: '#defdb5ff',   // Light Green (Main Text)
+                background: '#050c20', // Deep Blue
+                primary: '#defdb5',   // Light Green (Main Text)
                 secondary: '#074799', // Medium Blue
-                accent: '#d8cd37ff',    // Teal
-                light: '#E1FFBB',     // Alias for consistency with old code if needed, but mapped to main text color
-                white: '#e7e7e7ff',
+                accent: '#d8cd37',    // Gold
+                light: '#E1FFBB',     // Alias
+                white: '#e7e7e7',
             },
             fontFamily: {
                 sans: ['Poppins', 'sans-serif'],

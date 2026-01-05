@@ -4,7 +4,7 @@ import { GraduationCap } from 'lucide-react';
 
 const Education = () => {
     return (
-        <section id="education" className="py-20 bg-background">
+        <section id="education" className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="bg-secondary/10 backdrop-blur-md rounded-[3rem] p-8 md:p-16 border border-accent/40 shadow-2xl relative overflow-hidden">
                     {/* Decorative gradient */}

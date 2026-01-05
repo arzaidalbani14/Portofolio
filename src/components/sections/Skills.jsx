@@ -18,7 +18,7 @@ const SkillCircle = ({ percentage, title, icon: Icon, delay }) => {
         >
             <div className="relative w-40 h-40 flex items-center justify-center">
                 {/* Background Circle */}
-                <svg className="w-full h-full transform -rotate-90">
+                <svg className="w-full h-full transform -rotate-90 overflow-visible">
                     <circle
                         cx="80"
                         cy="80"
@@ -65,7 +65,7 @@ const Skills = () => {
     ];
 
     return (
-        <section id="skills" className="py-20 bg-background">
+        <section id="skills" className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="bg-secondary/10 backdrop-blur-md rounded-[3rem] p-8 md:p-16 border border-accent/40 relative overflow-hidden">
                     {/* Decorative gradient */}
@@ -77,7 +77,7 @@ const Skills = () => {
                         viewport={{ once: true }}
                         className="text-center mb-16 relative z-10"
                     >
-                        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Display My Skills</h2>
+                        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Skills</h2>
                         <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
                     </motion.div>
 

@@ -65,7 +65,7 @@ const Projects = () => {
     ];
 
     return (
-        <section id="projects" className="py-20 bg-background relative">
+        <section id="projects" className="py-20 relative">
 
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
