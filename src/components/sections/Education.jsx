@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap } from 'lucide-react';
+import univLogo from '../../assets/images/university/univ-logo.png';
 
 const Education = () => {
     return (
@@ -30,15 +31,16 @@ const Education = () => {
                         {/* Left Content */}
                         <div className="flex-1 text-right space-y-2">
                             <h3 className="text-lg md:text-xl font-medium text-gray-400">Degree</h3>
-                            <h2 className="text-2xl md:text-3xl font-bold text-primary">Bachelor of Education</h2>
+                            <h2 className="text-2xl md:text-3xl font-bold text-primary">Bachelor of Science
+                                in Informatics and Computer Engineering Education</h2>
 
                             <h3 className="text-lg md:text-xl font-medium text-gray-400 mt-6">Major</h3>
-                            <h2 className="text-2xl md:text-3xl font-bold text-primary">Computer Science</h2>
+                            <h2 className="text-2xl md:text-3xl font-bold text-primary">Informatics and Computer Engineering Education</h2>
 
                             <h3 className="text-lg md:text-xl font-medium text-gray-400 mt-6">University</h3>
                             <h2 className="text-2xl md:text-3xl font-bold text-primary">State University of Jakarta</h2>
 
-                            <h3 className="text-lg md:text-xl font-medium text-gray-400 mt-6">Expected Grad. Year</h3>
+                            <h3 className="text-lg md:text-xl font-medium text-gray-400 mt-6">Expected Graduation Year</h3>
                             <h2 className="text-2xl md:text-3xl font-bold text-primary">2027</h2>
                         </div>
 
@@ -55,9 +57,13 @@ const Education = () => {
                         <div className="flex-1 flex justify-center md:justify-start">
                             <motion.div
                                 whileHover={{ rotate: 10, scale: 1.1 }}
-                                className="w-64 h-64 bg-secondary/10 rounded-full flex items-center justify-center text-gray-400 border-8 border-secondary/20 shadow-inner"
+                                className="w-64 h-64 bg-secondary/10 rounded-full flex items-center justify-center overflow-hidden border-8 border-secondary/20 shadow-inner"
                             >
-                                <span className="text-2xl font-bold">Univ Logo</span>
+                                <img
+                                    src={univLogo}
+                                    alt="State University of Jakarta Logo"
+                                    className="w-48 h-48 object-contain"
+                                />
                             </motion.div>
                         </div>
                     </motion.div>

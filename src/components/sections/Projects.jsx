@@ -1,6 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
+import project1Image from '../../assets/images/projects/project-1.png';
+import project2Image from '../../assets/images/projects/project-2.png';
 
 const ProjectCard = ({ title, image, index }) => {
     return (
@@ -57,11 +59,10 @@ const ProjectCard = ({ title, image, index }) => {
 };
 
 const Projects = () => {
-    // Placeholders
+    // Projects data with local assets
     const projects = [
-        { title: "E-Commerce Dashboard", image: "https://placehold.co/600x400/001A6E/E1FFBB?text=Project+1" },
-        { title: "Portfolio Website", image: "https://placehold.co/600x400/074799/E1FFBB?text=Project+2" },
-        { title: "Task Management App", image: "https://placehold.co/600x400/009990/E1FFBB?text=Project+3" },
+        { title: "E-Commerce Dashboard", image: project1Image },
+        { title: "Portfolio Website", image: project2Image },
     ];
 
     return (

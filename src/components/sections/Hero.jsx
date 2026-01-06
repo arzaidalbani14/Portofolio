@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import profileImage from '../../assets/images/profile/profile.jpg';
 
 const Hero = () => {
-    // Simulated placeholder if image is missing, or use a colored circle
-    const profileImage = "https://placehold.co/400x400/074799/E1FFBB?text=Profile";
 
     return (
         <section id="#" className="min-h-[600px] py-32 flex items-center justify-center overflow-hidden relative">
@@ -32,23 +31,27 @@ const Hero = () => {
                         >
                             Hi! I'm Zaid
                             <motion.span
-                                className="text-secondary brightness-125 block mt-2"
+                                className="text-secondary brightness-125 block mt-2 relative"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, delay: 0.5 }}
                             >
-                                <Typewriter
-                                    texts={[
-                                        "Web Developer",
-                                        "Web Designer",
-                                        "Front End Developer",
-                                        "Back End Developer",
-                                        "Full Stack Developer"
-                                    ]}
-                                    delay={70}
-                                    deleteDelay={40}
-                                    waitTime={800}
-                                />
+                                {/* Invisible placeholder to reserve space for longest text */}
+                                <span className="invisible whitespace-nowrap" aria-hidden="true">Full Stack Developer</span>
+                                <span className="absolute left-0 top-0 whitespace-nowrap">
+                                    <Typewriter
+                                        texts={[
+                                            "Web Developer",
+                                            "Web Designer",
+                                            "Front End Developer",
+                                            "Back End Developer",
+                                            "Full Stack Developer"
+                                        ]}
+                                        delay={70}
+                                        deleteDelay={40}
+                                        waitTime={800}
+                                    />
+                                </span>
                             </motion.span>
                         </motion.h1>
                         <motion.p
@@ -57,9 +60,7 @@ const Hero = () => {
                             transition={{ duration: 0.5, delay: 0.4 }}
                             className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed"
                         >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra, justo at commodo fermentum,
-                            nisl diam maximus lorem, sed venenatis quam lorem accumsan est. Duis quis pharetra elit.
-                            Nulla.
+                            Informatics and Computer Engineering Education student with basic to intermediate understanding of software development. Experienced in learning web development, backend development, and database management, with solid knowledge of programming concepts and programming languages .
                         </motion.p>
 
                         <motion.div
@@ -99,11 +100,7 @@ const Hero = () => {
                                 repeat: Infinity,
                                 ease: "easeInOut"
                             }}
-                            className="relative"
                         >
-                            {/* Decorative circle behind image */}
-                            <div className="absolute inset-0 bg-secondary rounded-full transform translate-x-4 translate-y-4 -z-10 opacity-30" />
-
                             <div className="w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl">
                                 <img
                                     src={profileImage}
