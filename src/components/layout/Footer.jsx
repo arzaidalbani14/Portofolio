@@ -12,7 +12,7 @@ const Footer = () => {
     ];
 
     return (
-        <footer className="py-12 border-t border-primary/10 relative overflow-hidden">
+        <footer id="contact" className="py-12 border-t border-primary/10 relative overflow-hidden">
             {/* Decorative Glow */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-full bg-accent/5 blur-3xl rounded-full -z-10" />
 

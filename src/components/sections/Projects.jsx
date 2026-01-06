@@ -62,7 +62,6 @@ const Projects = () => {
     // Projects data with local assets
     const projects = [
         { title: "DSS AHP Website", image: project1Image },
-        { title: "Portfolio Website", image: project2Image },
     ];
 
     return (

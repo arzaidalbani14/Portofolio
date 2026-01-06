@@ -1,11 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code2, Terminal, Coffee, Layers, Braces, Database, Layout, GitBranch, ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+    Globe,
+    ClipboardList,
+    Boxes,
+    Brain,
+    Atom,
+    Code2,
+    Lightbulb,
+    Users,
+    Sparkles,
+    ChevronLeft,
+    ChevronRight
+} from 'lucide-react';
 
-const SkillCircle = ({ percentage, title, icon: Icon }) => {
+// Custom Git Icon - simple Y branch with dots
+const GitIcon = ({ size = 24, className = "" }) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+        style={{ transform: 'rotate(150deg)' }}
+    >
+        {/* Y-shaped branch */}
+        <path d="M12 22V12M12 12L6 4M12 12L18 4" />
+        {/* Bold dots at branch ends */}
+        <circle cx="6" cy="4" r="2.5" fill="currentColor" />
+        <circle cx="18" cy="4" r="2.5" fill="currentColor" />
+    </svg>
+);
+
+const SkillCircle = ({ title, icon: Icon }) => {
     const radius = 50;
     const circumference = 2 * Math.PI * radius;
-    const strokeDashoffset = circumference - (percentage / 100) * circumference;
+    const strokeDashoffset = 0; // Full circle (100%)
 
     return (
         <motion.div
@@ -27,7 +61,7 @@ const SkillCircle = ({ percentage, title, icon: Icon }) => {
                         fill="transparent"
                         className="text-secondary/30"
                     />
-                    {/* Progress Circle */}
+                    {/* Progress Circle - Full */}
                     <motion.circle
                         cx="80"
                         cy="80"
@@ -44,28 +78,29 @@ const SkillCircle = ({ percentage, title, icon: Icon }) => {
                     />
                 </svg>
 
-                {/* Center Content */}
+                {/* Center Content - Icon Only */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-primary group-hover:text-accent transition-colors duration-300">
-                    <Icon size={32} className="mb-1" />
-                    <span className="text-xl font-bold">{percentage}%</span>
+                    <Icon size={40} />
                 </div>
             </div>
 
-            <h3 className="mt-4 text-xl font-semibold text-primary group-hover:text-accent transition-colors">{title}</h3>
+            <h3 className="mt-4 text-xl font-semibold text-primary group-hover:text-accent transition-colors text-center">{title}</h3>
         </motion.div>
     );
 };
 
 const Skills = () => {
     const originalSkills = [
-        { title: 'JavaScript', percentage: 89, icon: Code2 },
-        { title: 'Python', percentage: 75, icon: Terminal },
-        { title: 'Java', percentage: 80, icon: Coffee },
-        { title: 'React', percentage: 85, icon: Layers },
-        { title: 'TypeScript', percentage: 70, icon: Braces },
-        { title: 'Node.js', percentage: 65, icon: Database },
-        { title: 'Tailwind', percentage: 90, icon: Layout },
-        { title: 'Git', percentage: 78, icon: GitBranch },
+        { title: 'Web Development', icon: Globe },
+        { title: 'Requirement Analysis', icon: ClipboardList },
+        { title: 'OOP Programming', icon: Boxes },
+        { title: 'Analytical Thinking', icon: Brain },
+        { title: 'React Understanding', icon: Atom },
+        { title: 'JavaScript Understanding', icon: Code2 },
+        { title: 'Problem Solving', icon: Lightbulb },
+        { title: 'Teamwork', icon: Users },
+        { title: 'Basic Git', icon: GitIcon },
+        { title: 'AI Prompting', icon: Sparkles },
     ];
 
     // Triple the list to create buffer zones for infinite scrolling
@@ -100,7 +135,7 @@ const Skills = () => {
 
     const goToSlide = (index) => {
         if (isResetting) return;
-        // Map visual index (0-7) to the middle set (8-15)
+        // Map visual index (0-9) to the middle set (10-19)
         setCurrentIndex(originalSkills.length + index);
     };
 

@@ -7,8 +7,10 @@ const Navbar = () => {
 
     const navLinks = [
         { title: 'Home', href: '#' },
-        { title: 'Projects', href: '#projects' },
         { title: 'Skills', href: '#skills' },
+        { title: 'Projects', href: '#projects' },
+        { title: 'Education', href: '#education' },
+        { title: 'Contact', href: '#contact' },
     ];
 
     const socialLinks = [
@@ -16,6 +18,20 @@ const Navbar = () => {
         { icon: Instagram, href: '#' },
         { icon: Github, href: '#' },
     ];
+
+    const handleNavClick = (e, href) => {
+        e.preventDefault();
+        if (href === '#') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            const element = document.querySelector(href);
+            if (element) {
+                const offsetTop = element.offsetTop - 80; // Account for fixed navbar
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            }
+        }
+        setIsOpen(false);
+    };
 
     return (
         <nav className="fixed w-full z-50 bg-background/80 backdrop-blur-md border-b border-primary/10 transition-colors duration-300">
@@ -37,11 +53,12 @@ const Navbar = () => {
                                 <motion.a
                                     key={link.title}
                                     href={link.href}
+                                    onClick={(e) => handleNavClick(e, link.href)}
                                     initial={{ opacity: 0, y: -20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1 }}
                                     whileHover={{ scale: 1.1, color: '#009990' }}
-                                    className="text-primary hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                                    className="text-primary hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer"
                                 >
                                     {link.title}
                                 </motion.a>
@@ -87,8 +104,8 @@ const Navbar = () => {
                                 <a
                                     key={link.title}
                                     href={link.href}
-                                    className="text-primary hover:text-accent block px-3 py-2 rounded-md text-base font-medium"
-                                    onClick={() => setIsOpen(false)}
+                                    className="text-primary hover:text-accent block px-3 py-2 rounded-md text-base font-medium cursor-pointer"
+                                    onClick={(e) => handleNavClick(e, link.href)}
                                 >
                                     {link.title}
                                 </a>
