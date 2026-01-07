@@ -55,16 +55,22 @@ const Education = () => {
 
                         {/* Right Content / Logo */}
                         <div className="flex-1 flex justify-center md:justify-start">
-                            <motion.div
-                                whileHover={{ rotate: 10, scale: 1.1 }}
-                                className="w-64 h-64 bg-secondary/10 rounded-full flex items-center justify-center overflow-hidden border-8 border-secondary/20 shadow-inner"
+                            <a
+                                href="https://unj.ac.id/"
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
-                                <img
-                                    src={univLogo}
-                                    alt="State University of Jakarta Logo"
-                                    className="w-48 h-48 object-contain"
-                                />
-                            </motion.div>
+                                <motion.div
+                                    whileHover={{ scale: 1.1, transition: { duration: 0.15 } }}
+                                    className="w-64 h-64 bg-secondary/10 rounded-full flex items-center justify-center overflow-hidden border-8 border-secondary/20 shadow-inner cursor-pointer"
+                                >
+                                    <img
+                                        src={univLogo}
+                                        alt="State University of Jakarta Logo"
+                                        className="w-48 h-48 object-contain"
+                                    />
+                                </motion.div>
+                            </a>
                         </div>
                     </motion.div>
                 </div>

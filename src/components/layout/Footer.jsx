@@ -49,13 +49,13 @@ const Footer = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            whileHover={{ y: -5, scale: 1.05 }}
+                            whileHover={{ y: -5, scale: 1.05, transition: { duration: 0.15 } }}
                             className="flex flex-col items-center gap-2 group"
                         >
-                            <div className="p-3 bg-secondary/30 rounded-full shadow-lg text-primary group-hover:text-white group-hover:bg-accent transition-all duration-300 border border-primary/10">
+                            <div className="p-3 bg-secondary/30 rounded-full shadow-lg text-primary group-hover:text-white group-hover:bg-accent transition-all duration-150 border border-primary/10">
                                 <social.icon size={24} />
                             </div>
-                            <span className="text-sm text-gray-400 group-hover:text-accent transition-colors">
+                            <span className="text-sm text-gray-400 group-hover:text-accent transition-colors duration-150">
                                 {social.label}
                             </span>
                         </motion.a>

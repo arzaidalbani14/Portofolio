@@ -59,8 +59,8 @@ const Navbar = () => {
                                     initial={{ opacity: 0, y: -20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1 }}
-                                    whileHover={{ scale: 1.1, color: '#009990' }}
-                                    className="text-primary hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer"
+                                    whileHover={{ scale: 1.1, color: '#009990', transition: { duration: 0.15 } }}
+                                    className="text-primary hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 cursor-pointer"
                                 >
                                     {link.title}
                                 </motion.a>

@@ -4,7 +4,7 @@ import { ExternalLink, Github } from 'lucide-react';
 import project1Image from '../../assets/images/projects/project-1.png';
 import project2Image from '../../assets/images/projects/project-2.png';
 
-const ProjectCard = ({ title, image, index }) => {
+const ProjectCard = ({ title, image, githubUrl, websiteUrl, index }) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -15,29 +15,11 @@ const ProjectCard = ({ title, image, index }) => {
             className="group flex flex-col bg-secondary/20 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-primary/10 h-full transform-gpu"
         >
             {/* Header: Project Name */}
-            <div className="p-4 border-b border-primary/10 bg-accent flex justify-between items-center">
-                <h3 className="text-lg font-bold text-background truncate pr-4">{title}</h3>
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <motion.a
-                        href="#"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="text-background/70 hover:text-background transition-colors"
-                    >
-                        <Github size={18} />
-                    </motion.a>
-                    <motion.a
-                        href="#"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="text-background/70 hover:text-background transition-colors"
-                    >
-                        <ExternalLink size={18} />
-                    </motion.a>
-                </div>
+            <div className="p-4 border-b border-primary/10 bg-accent">
+                <h3 className="text-lg font-bold text-background truncate">{title}</h3>
             </div>
 
-            {/* Body: Project Image */}
+            {/* Body: Project Image with Hover Overlay */}
             <div className="flex-1 overflow-hidden relative">
                 <motion.img
                     whileHover={{ scale: 1.05 }}
@@ -48,8 +30,41 @@ const ProjectCard = ({ title, image, index }) => {
                     loading="lazy"
                 />
 
-                {/* Optional: Overlay gradient for better text visibility if needed, or just pure image as requested */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                {/* Centered Overlay on Hover */}
+                <div className="absolute inset-0 bg-background/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-6">
+                    {/* GitHub Link */}
+                    <motion.a
+                        href={githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.1, transition: { duration: 0.15 } }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex flex-col items-center gap-2 p-4 bg-secondary/50 rounded-xl border border-primary/20 hover:border-accent transition-colors"
+                    >
+                        <Github size={32} className="text-primary" />
+                        <span className="text-sm text-primary font-medium">GitHub</span>
+                    </motion.a>
+
+                    {/* Website Link */}
+                    {websiteUrl ? (
+                        <motion.a
+                            href={websiteUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.1, transition: { duration: 0.15 } }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex flex-col items-center gap-2 p-4 bg-secondary/50 rounded-xl border border-primary/20 hover:border-accent transition-colors"
+                        >
+                            <ExternalLink size={32} className="text-primary" />
+                            <span className="text-sm text-primary font-medium">Website</span>
+                        </motion.a>
+                    ) : (
+                        <div className="flex flex-col items-center gap-2 p-4 bg-secondary/30 rounded-xl border border-primary/10 opacity-50">
+                            <ExternalLink size={32} className="text-gray-500" />
+                            <span className="text-sm text-gray-500 font-medium">Coming Soon</span>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Decorative Accent on bottom */}
@@ -61,7 +76,12 @@ const ProjectCard = ({ title, image, index }) => {
 const Projects = () => {
     // Projects data with local assets
     const projects = [
-        { title: "DSS AHP Website", image: project1Image },
+        {
+            title: "DSS AHP Website",
+            image: project1Image,
+            githubUrl: "https://github.com/arzaidalbani14/DSS-AHP",
+            websiteUrl: null // Not deployed yet
+        },
     ];
 
     return (
