@@ -172,12 +172,23 @@ const Skills = () => {
                             <ChevronLeft size={24} />
                         </button>
 
-                        <div className="flex-1 overflow-hidden px-4">
+                        <div className="flex-1 overflow-hidden px-4 touch-pan-y">
                             <motion.div
-                                className="flex will-change-transform"
+                                className="flex will-change-transform cursor-grab active:cursor-grabbing"
                                 animate={{ x: `-${currentIndex * slidePercentage}%` }}
                                 transition={isResetting ? { duration: 0 } : { duration: 0.3, ease: "easeOut" }}
                                 onAnimationComplete={handleAnimationComplete}
+                                drag="x"
+                                dragConstraints={{ left: 0, right: 0 }}
+                                dragElastic={0.1}
+                                onDragEnd={(event, info) => {
+                                    const threshold = 50;
+                                    if (info.offset.x < -threshold) {
+                                        nextSlide();
+                                    } else if (info.offset.x > threshold) {
+                                        prevSlide();
+                                    }
+                                }}
                             >
                                 {skills.map((skill, index) => (
                                     <div
@@ -199,29 +210,13 @@ const Skills = () => {
                         </button>
                     </motion.div>
 
-                    {/* Mobile Navigation Arrows */}
+                    {/* Dots Navigation - show first on mobile */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.4, delay: 0.2 }}
-                        className="flex md:hidden justify-between mt-8 px-8"
-                    >
-                        <button onClick={prevSlide} className="p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150">
-                            <ChevronLeft size={24} />
-                        </button>
-                        <button onClick={nextSlide} className="p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150">
-                            <ChevronRight size={24} />
-                        </button>
-                    </motion.div>
-
-                    {/* Dots Navigation */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 0.2 }}
-                        className="flex justify-center gap-3 mt-10"
+                        className="flex justify-center gap-3 mt-10 md:order-last"
                     >
                         {originalSkills.map((_, idx) => (
                             <button
@@ -234,6 +229,22 @@ const Skills = () => {
                                 aria-label={`Go to slide ${idx + 1}`}
                             />
                         ))}
+                    </motion.div>
+
+                    {/* Mobile Navigation Arrows - show after dots on mobile */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.3 }}
+                        className="flex md:hidden justify-center gap-6 mt-6"
+                    >
+                        <button onClick={prevSlide} className="p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150">
+                            <ChevronLeft size={24} />
+                        </button>
+                        <button onClick={nextSlide} className="p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150">
+                            <ChevronRight size={24} />
+                        </button>
                     </motion.div>
                 </div>
             </div>
