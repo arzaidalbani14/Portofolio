@@ -69,20 +69,38 @@ const Hero = () => {
                             transition={{ duration: 0.5, delay: 0.6 }}
                             className="flex gap-4 justify-center md:justify-start"
                         >
-                            <motion.button
+                            <motion.a
+                                href="#contact"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    const element = document.querySelector('#contact');
+                                    if (element) {
+                                        const offsetTop = element.offsetTop - 80;
+                                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                                    }
+                                }}
                                 whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(0, 153, 144, 0.2)" }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-3 bg-accent text-background rounded-full font-semibold border-2 border-transparent hover:bg-transparent hover:text-accent hover:border-accent transition-all duration-300"
+                                className="px-8 py-3 bg-accent text-background rounded-full font-semibold border-2 border-transparent hover:bg-transparent hover:text-accent hover:border-accent transition-all duration-300 cursor-pointer"
                             >
                                 Contact Me
-                            </motion.button>
-                            <motion.button
+                            </motion.a>
+                            <motion.a
+                                href="#projects"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    const element = document.querySelector('#projects');
+                                    if (element) {
+                                        const offsetTop = element.offsetTop - 80;
+                                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                                    }
+                                }}
                                 whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(225, 255, 187, 0.2)" }}
                                 whileTap={{ scale: 0.95 }}
-                                className="px-8 py-3 bg-transparent text-primary border-2 border-primary rounded-full font-semibold hover:bg-primary hover:text-background transition-all duration-300"
+                                className="px-8 py-3 bg-transparent text-primary border-2 border-primary rounded-full font-semibold hover:bg-primary hover:text-background transition-all duration-300 cursor-pointer"
                             >
                                 View Projects
-                            </motion.button>
+                            </motion.a>
                         </motion.div>
                     </div>
 

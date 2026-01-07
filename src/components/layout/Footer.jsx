@@ -1,14 +1,26 @@
 import React from 'react';
-import { Linkedin, Instagram, Github, Twitter, Mail } from 'lucide-react';
+import { Linkedin, Instagram, Github, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+// Custom X (Twitter) Icon
+const XIcon = ({ size = 24 }) => (
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="currentColor"
+    >
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+);
 
 const Footer = () => {
     const socialLinks = [
-        { icon: Mail, href: '#' },
-        { icon: Linkedin, href: '#' },
-        { icon: Instagram, href: '#' },
-        { icon: Github, href: '#' },
-        { icon: Twitter, href: '#' },
+        { icon: Mail, href: 'mailto:albaniarzaid24@gmail.com', label: 'Email' },
+        { icon: Linkedin, href: 'https://www.linkedin.com/in/arzaidalbani/', label: 'LinkedIn' },
+        { icon: Instagram, href: 'https://www.instagram.com/arzaidlbn/', label: 'Instagram' },
+        { icon: Github, href: 'https://github.com/arzaidalbani14', label: 'GitHub' },
+        { icon: XIcon, href: 'https://x.com/mind_minning', label: 'X' },
     ];
 
     return (
@@ -26,19 +38,26 @@ const Footer = () => {
                     Contact
                 </motion.h2>
 
-                <div className="flex justify-center space-x-6 mb-8">
+                <div className="flex justify-center flex-wrap gap-6 mb-8">
                     {socialLinks.map((social, index) => (
                         <motion.a
                             key={index}
                             href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            whileHover={{ y: -5, scale: 1.2, backgroundColor: '#009990' }}
-                            className="p-3 bg-secondary/30 rounded-full shadow-lg text-primary hover:text-white transition-all duration-300 border border-primary/10"
+                            whileHover={{ y: -5, scale: 1.05 }}
+                            className="flex flex-col items-center gap-2 group"
                         >
-                            <social.icon size={24} />
+                            <div className="p-3 bg-secondary/30 rounded-full shadow-lg text-primary group-hover:text-white group-hover:bg-accent transition-all duration-300 border border-primary/10">
+                                <social.icon size={24} />
+                            </div>
+                            <span className="text-sm text-gray-400 group-hover:text-accent transition-colors">
+                                {social.label}
+                            </span>
                         </motion.a>
                     ))}
                 </div>

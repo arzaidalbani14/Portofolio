@@ -44,7 +44,7 @@ const ProjectCard = ({ title, image, index }) => {
                     transition={{ duration: 0.4 }}
                     src={image}
                     alt={title}
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                    className="w-full h-full object-cover transition-transform duration-300"
                     loading="lazy"
                 />
 

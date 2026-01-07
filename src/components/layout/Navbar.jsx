@@ -14,9 +14,9 @@ const Navbar = () => {
     ];
 
     const socialLinks = [
-        { icon: Linkedin, href: '#' },
-        { icon: Instagram, href: '#' },
-        { icon: Github, href: '#' },
+        { icon: Linkedin, href: 'https://www.linkedin.com/in/arzaidalbani/' },
+        { icon: Instagram, href: 'https://www.instagram.com/arzaidlbn/' },
+        { icon: Github, href: 'https://github.com/arzaidalbani14' },
     ];
 
     const handleNavClick = (e, href) => {
@@ -26,7 +26,7 @@ const Navbar = () => {
         } else {
             const element = document.querySelector(href);
             if (element) {
-                const offsetTop = element.offsetTop - 80; // Account for fixed navbar
+                const offsetTop = element.offsetTop - 80;
                 window.scrollTo({ top: offsetTop, behavior: 'smooth' });
             }
         }
@@ -38,13 +38,15 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <motion.div
+                    <motion.a
+                        href="#"
+                        onClick={(e) => handleNavClick(e, '#')}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="flex-shrink-0"
+                        className="flex-shrink-0 cursor-pointer"
                     >
-                        <span className="text-2xl font-bold text-primary">ZAID</span>
-                    </motion.div>
+                        <span className="text-2xl font-bold text-primary hover:text-accent transition-colors">ZAID</span>
+                    </motion.a>
 
                     {/* Desktop Menu */}
                     <div className="hidden md:block">
@@ -68,6 +70,8 @@ const Navbar = () => {
                                     <motion.a
                                         key={index}
                                         href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         whileHover={{ y: -3, color: '#009990' }}
                                         className="text-primary hover:text-accent transition-colors"
                                     >
@@ -115,6 +119,8 @@ const Navbar = () => {
                                     <a
                                         key={index}
                                         href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="text-primary hover:text-accent transition-colors"
                                     >
                                         <social.icon size={20} />
