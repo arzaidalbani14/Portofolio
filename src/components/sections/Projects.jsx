@@ -88,8 +88,8 @@ const Projects = () => {
         <section id="projects" className="py-20 relative">
 
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="bg-secondary/10 backdrop-blur-md rounded-[3rem] p-8 md:p-16 border border-accent/40 shadow-2xl relative overflow-hidden">
+            <div className="w-full relative z-10">
+                <div className="bg-secondary/10 backdrop-blur-md rounded-none p-8 md:p-16 border-y border-accent/40 shadow-2xl relative overflow-hidden">
                     {/* Decorative gradient */}
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent opacity-30 pointer-events-none" />
 

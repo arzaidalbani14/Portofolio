@@ -11,7 +11,8 @@ import {
     Users,
     Sparkles,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    Microscope
 } from 'lucide-react';
 
 // Custom Git Icon - simple Y branch with dots
@@ -33,6 +34,9 @@ const GitIcon = ({ size = 24, className = "" }) => (
         <circle cx="18" cy="4" r="2.5" fill="currentColor" />
     </svg>
 );
+
+
+
 
 // Optimized SkillCircle - simplified animations
 const SkillCircle = React.memo(({ title, icon: Icon }) => {
@@ -83,7 +87,7 @@ const Skills = () => {
         { title: 'Web Development', icon: Globe },
         { title: 'Requirement Analysis', icon: ClipboardList },
         { title: 'OOP Programming', icon: Boxes },
-        { title: 'Analytical Thinking', icon: Brain },
+        { title: 'Analytical Thinking', icon: Microscope },
         { title: 'React Understanding', icon: Atom },
         { title: 'JavaScript Understanding', icon: Code2 },
         { title: 'Problem Solving', icon: Lightbulb },
@@ -112,6 +116,17 @@ const Skills = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    // Initialize mobile carousel to middle set position
+    useEffect(() => {
+        if (mobileScrollRef.current && itemsPerPage === 1) {
+            const container = mobileScrollRef.current;
+            const totalItems = originalSkills.length * 3;
+            const itemWidth = container.scrollWidth / totalItems;
+            // Start at the beginning of middle set
+            container.scrollLeft = originalSkills.length * itemWidth;
+        }
+    }, [originalSkills.length, itemsPerPage]);
 
     const nextSlide = useCallback(() => {
         if (isResetting) return;
@@ -146,10 +161,26 @@ const Skills = () => {
         if (!mobileScrollRef.current) return;
         const container = mobileScrollRef.current;
         const scrollLeft = container.scrollLeft;
-        const itemWidth = container.scrollWidth / originalSkills.length;
-        const newIndex = Math.round(scrollLeft / itemWidth);
-        if (newIndex !== mobileActiveIndex && newIndex >= 0 && newIndex < originalSkills.length) {
-            setMobileActiveIndex(newIndex);
+        // Use tripled list, so itemWidth is based on 3x skills
+        const totalItems = originalSkills.length * 3;
+        const itemWidth = container.scrollWidth / totalItems;
+        const rawIndex = Math.round(scrollLeft / itemWidth);
+        const normalizedIndex = rawIndex % originalSkills.length;
+
+        if (normalizedIndex !== mobileActiveIndex && normalizedIndex >= 0 && normalizedIndex < originalSkills.length) {
+            setMobileActiveIndex(normalizedIndex);
+        }
+
+        // Reset to middle set if scrolled too far (for seamless loop)
+        const middleStart = originalSkills.length * itemWidth;
+        const middleEnd = originalSkills.length * 2 * itemWidth;
+
+        if (scrollLeft < middleStart - itemWidth * 0.5) {
+            // Scrolled into first set, jump to middle
+            container.scrollLeft = scrollLeft + originalSkills.length * itemWidth;
+        } else if (scrollLeft > middleEnd - itemWidth * 0.5) {
+            // Scrolled into third set, jump to middle
+            container.scrollLeft = scrollLeft - originalSkills.length * itemWidth;
         }
     }, [mobileActiveIndex, originalSkills.length]);
 
@@ -183,29 +214,33 @@ const Skills = () => {
         requestAnimationFrame(animateScroll);
     }, []);
 
-    // Mobile navigation functions - scroll the container
+    // Mobile navigation functions - scroll the container (infinite loop)
     const mobileNextSlide = useCallback(() => {
         if (!mobileScrollRef.current) return;
         const container = mobileScrollRef.current;
-        const itemWidth = container.scrollWidth / originalSkills.length;
-        const newIndex = Math.min(mobileActiveIndex + 1, originalSkills.length - 1);
-        smoothScrollTo(container, newIndex * itemWidth);
-    }, [mobileActiveIndex, originalSkills.length, smoothScrollTo]);
+        const totalItems = originalSkills.length * 3;
+        const itemWidth = container.scrollWidth / totalItems;
+        // Just scroll forward, handleMobileScroll will reset if needed
+        smoothScrollTo(container, container.scrollLeft + itemWidth);
+    }, [originalSkills.length, smoothScrollTo]);
 
     const mobilePrevSlide = useCallback(() => {
         if (!mobileScrollRef.current) return;
         const container = mobileScrollRef.current;
-        const itemWidth = container.scrollWidth / originalSkills.length;
-        const newIndex = Math.max(mobileActiveIndex - 1, 0);
-        smoothScrollTo(container, newIndex * itemWidth);
-    }, [mobileActiveIndex, originalSkills.length, smoothScrollTo]);
+        const totalItems = originalSkills.length * 3;
+        const itemWidth = container.scrollWidth / totalItems;
+        // Just scroll backward, handleMobileScroll will reset if needed
+        smoothScrollTo(container, container.scrollLeft - itemWidth);
+    }, [originalSkills.length, smoothScrollTo]);
 
-    // Mobile go to specific slide
+    // Mobile go to specific slide (jumps to middle set position)
     const mobileGoToSlide = useCallback((index) => {
         if (!mobileScrollRef.current) return;
         const container = mobileScrollRef.current;
-        const itemWidth = container.scrollWidth / originalSkills.length;
-        smoothScrollTo(container, index * itemWidth);
+        const totalItems = originalSkills.length * 3;
+        const itemWidth = container.scrollWidth / totalItems;
+        // Go to index in middle set
+        smoothScrollTo(container, (originalSkills.length + index) * itemWidth);
     }, [originalSkills.length, smoothScrollTo]);
 
     return (
@@ -268,7 +303,7 @@ const Skills = () => {
                         </button>
                     </motion.div>
 
-                    {/* Mobile Carousel Container - Native scroll with snap */}
+                    {/* Mobile Carousel Container - Native scroll with tripled list for infinite loop */}
                     <motion.div
                         ref={mobileScrollRef}
                         onScroll={handleMobileScroll}
@@ -277,10 +312,11 @@ const Skills = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.4, delay: 0.1 }}
                         className="md:hidden relative z-10 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 px-4"
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'smooth' }}
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
-                        <div className="flex gap-6 pb-4" style={{ width: `${originalSkills.length * 80}%` }}>
-                            {originalSkills.map((skill, index) => (
+                        <div className="flex gap-6 pb-4" style={{ width: `${originalSkills.length * 3 * 80}%` }}>
+                            {/* Tripled list for infinite scrolling */}
+                            {[...originalSkills, ...originalSkills, ...originalSkills].map((skill, index) => (
                                 <div
                                     key={`mobile-${skill.title}-${index}`}
                                     className="snap-center flex-shrink-0 w-[80vw] flex justify-center"
