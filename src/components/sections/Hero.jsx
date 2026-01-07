@@ -27,18 +27,18 @@ const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-5xl md:text-6xl font-bold text-primary mb-6 whitespace-nowrap"
+                            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-6 md:whitespace-nowrap text-center md:text-left"
                         >
                             Hi! I'm Arzaid Albani
                             <motion.span
-                                className="text-secondary brightness-125 block mt-2 relative text-4xl md:text-5xl"
+                                className="text-secondary brightness-125 block mt-2 relative text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, delay: 0.5 }}
                             >
                                 {/* Invisible placeholder to reserve space for longest text */}
-                                <span className="invisible whitespace-nowrap" aria-hidden="true">Full Stack Developer</span>
-                                <span className="absolute left-0 top-0 whitespace-nowrap">
+                                <span className="invisible md:whitespace-nowrap" aria-hidden="true">Full Stack Developer</span>
+                                <span className="absolute left-0 md:left-0 right-0 md:right-auto top-0 md:whitespace-nowrap text-center md:text-left">
                                     <Typewriter
                                         texts={[
                                             "Web Developer",
@@ -58,7 +58,7 @@ const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
-                            className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed"
+                            className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed text-center md:text-left"
                         >
                             Informatics and Computer Engineering Education student with basic to intermediate understanding of software development. Experienced in learning web development, backend development, and database management, with solid knowledge of programming concepts and programming languages .
                         </motion.p>
