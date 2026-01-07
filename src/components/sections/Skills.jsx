@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
     Globe,
@@ -101,6 +101,8 @@ const Skills = () => {
     const [currentIndex, setCurrentIndex] = useState(originalSkills.length);
     const [isResetting, setIsResetting] = useState(false);
     const [itemsPerPage, setItemsPerPage] = useState(3);
+    const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
+    const mobileScrollRef = useRef(null);
 
     useEffect(() => {
         const handleResize = () => {
@@ -139,6 +141,73 @@ const Skills = () => {
     const slidePercentage = 100 / itemsPerPage;
     const activeIndex = currentIndex % originalSkills.length;
 
+    // Handle mobile scroll to update active dot
+    const handleMobileScroll = useCallback(() => {
+        if (!mobileScrollRef.current) return;
+        const container = mobileScrollRef.current;
+        const scrollLeft = container.scrollLeft;
+        const itemWidth = container.scrollWidth / originalSkills.length;
+        const newIndex = Math.round(scrollLeft / itemWidth);
+        if (newIndex !== mobileActiveIndex && newIndex >= 0 && newIndex < originalSkills.length) {
+            setMobileActiveIndex(newIndex);
+        }
+    }, [mobileActiveIndex, originalSkills.length]);
+
+    // Custom smooth scroll function for better mobile support
+    const smoothScrollTo = useCallback((container, targetLeft, duration = 300) => {
+        const startLeft = container.scrollLeft;
+        const distance = targetLeft - startLeft;
+        const startTime = performance.now();
+
+        // Disable scroll-snap during animation to prevent instant snapping
+        const originalSnapType = container.style.scrollSnapType;
+        container.style.scrollSnapType = 'none';
+
+        const animateScroll = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Ease out cubic for smooth deceleration
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+
+            container.scrollLeft = startLeft + (distance * easeOut);
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            } else {
+                // Re-enable scroll-snap after animation completes
+                container.style.scrollSnapType = originalSnapType || '';
+            }
+        };
+
+        requestAnimationFrame(animateScroll);
+    }, []);
+
+    // Mobile navigation functions - scroll the container
+    const mobileNextSlide = useCallback(() => {
+        if (!mobileScrollRef.current) return;
+        const container = mobileScrollRef.current;
+        const itemWidth = container.scrollWidth / originalSkills.length;
+        const newIndex = Math.min(mobileActiveIndex + 1, originalSkills.length - 1);
+        smoothScrollTo(container, newIndex * itemWidth);
+    }, [mobileActiveIndex, originalSkills.length, smoothScrollTo]);
+
+    const mobilePrevSlide = useCallback(() => {
+        if (!mobileScrollRef.current) return;
+        const container = mobileScrollRef.current;
+        const itemWidth = container.scrollWidth / originalSkills.length;
+        const newIndex = Math.max(mobileActiveIndex - 1, 0);
+        smoothScrollTo(container, newIndex * itemWidth);
+    }, [mobileActiveIndex, originalSkills.length, smoothScrollTo]);
+
+    // Mobile go to specific slide
+    const mobileGoToSlide = useCallback((index) => {
+        if (!mobileScrollRef.current) return;
+        const container = mobileScrollRef.current;
+        const itemWidth = container.scrollWidth / originalSkills.length;
+        smoothScrollTo(container, index * itemWidth);
+    }, [originalSkills.length, smoothScrollTo]);
+
     return (
         <section id="skills" className="py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -156,44 +225,33 @@ const Skills = () => {
                         <div className="w-20 h-1 bg-accent mx-auto rounded-full" />
                     </motion.div>
 
-                    {/* Carousel Container */}
+                    {/* Desktop Carousel Container - Hidden on mobile */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.4, delay: 0.1 }}
-                        className="relative z-10 flex items-center justify-center gap-4"
+                        className="relative z-10 hidden md:flex items-center justify-center gap-4"
                     >
                         {/* Left Arrow */}
                         <button
                             onClick={prevSlide}
-                            className="hidden md:flex p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150 border border-white/5 z-20"
+                            className="flex p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150 border border-white/5 z-20"
                         >
                             <ChevronLeft size={24} />
                         </button>
 
-                        <div className="flex-1 overflow-hidden px-4 touch-pan-y">
+                        <div className="flex-1 overflow-hidden px-4">
                             <motion.div
-                                className="flex will-change-transform cursor-grab active:cursor-grabbing"
+                                className="flex will-change-transform"
                                 animate={{ x: `-${currentIndex * slidePercentage}%` }}
                                 transition={isResetting ? { duration: 0 } : { duration: 0.3, ease: "easeOut" }}
                                 onAnimationComplete={handleAnimationComplete}
-                                drag="x"
-                                dragConstraints={{ left: 0, right: 0 }}
-                                dragElastic={0.1}
-                                onDragEnd={(event, info) => {
-                                    const threshold = 50;
-                                    if (info.offset.x < -threshold) {
-                                        nextSlide();
-                                    } else if (info.offset.x > threshold) {
-                                        prevSlide();
-                                    }
-                                }}
                             >
                                 {skills.map((skill, index) => (
                                     <div
                                         key={`${skill.title}-${index}`}
-                                        className="min-w-full md:min-w-[33.333%] flex justify-center px-4"
+                                        className="min-w-[33.333%] flex justify-center px-4"
                                     >
                                         <SkillCircle {...skill} />
                                     </div>
@@ -204,10 +262,33 @@ const Skills = () => {
                         {/* Right Arrow */}
                         <button
                             onClick={nextSlide}
-                            className="hidden md:flex p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150 border border-white/5 z-20"
+                            className="flex p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150 border border-white/5 z-20"
                         >
                             <ChevronRight size={24} />
                         </button>
+                    </motion.div>
+
+                    {/* Mobile Carousel Container - Native scroll with snap */}
+                    <motion.div
+                        ref={mobileScrollRef}
+                        onScroll={handleMobileScroll}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                        className="md:hidden relative z-10 overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-4 px-4"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'smooth' }}
+                    >
+                        <div className="flex gap-6 pb-4" style={{ width: `${originalSkills.length * 80}%` }}>
+                            {originalSkills.map((skill, index) => (
+                                <div
+                                    key={`mobile-${skill.title}-${index}`}
+                                    className="snap-center flex-shrink-0 w-[80vw] flex justify-center"
+                                >
+                                    <SkillCircle {...skill} />
+                                </div>
+                            ))}
+                        </div>
                     </motion.div>
 
                     {/* Dots Navigation - show first on mobile */}
@@ -221,8 +302,8 @@ const Skills = () => {
                         {originalSkills.map((_, idx) => (
                             <button
                                 key={idx}
-                                onClick={() => goToSlide(idx)}
-                                className={`w-3 h-3 rounded-full transition-all duration-150 ${activeIndex === idx
+                                onClick={() => itemsPerPage === 1 ? mobileGoToSlide(idx) : goToSlide(idx)}
+                                className={`w-3 h-3 rounded-full transition-all duration-150 ${(itemsPerPage === 1 ? mobileActiveIndex : activeIndex) === idx
                                     ? 'bg-accent shadow-[0_0_8px_#d8cd37] scale-125'
                                     : 'bg-white/20 hover:bg-white/40'
                                     }`}
@@ -239,10 +320,10 @@ const Skills = () => {
                         transition={{ duration: 0.4, delay: 0.3 }}
                         className="flex md:hidden justify-center gap-6 mt-6"
                     >
-                        <button onClick={prevSlide} className="p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150">
+                        <button onClick={mobilePrevSlide} className="p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150">
                             <ChevronLeft size={24} />
                         </button>
-                        <button onClick={nextSlide} className="p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150">
+                        <button onClick={mobileNextSlide} className="p-3 rounded-full bg-secondary/20 hover:bg-accent hover:text-background text-primary transition-colors duration-150">
                             <ChevronRight size={24} />
                         </button>
                     </motion.div>
