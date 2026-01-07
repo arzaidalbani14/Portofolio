@@ -27,11 +27,11 @@ const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-5xl md:text-7xl font-bold text-primary mb-6"
+                            className="text-5xl md:text-6xl font-bold text-primary mb-6 whitespace-nowrap"
                         >
-                            Hi! I'm Zaid
+                            Hi! I'm Arzaid Albani
                             <motion.span
-                                className="text-secondary brightness-125 block mt-2 relative"
+                                className="text-secondary brightness-125 block mt-2 relative text-4xl md:text-5xl"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, delay: 0.5 }}

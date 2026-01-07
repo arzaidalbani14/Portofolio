@@ -1,24 +1,18 @@
 import React from 'react';
 import { Linkedin, Instagram, Github, Mail } from 'lucide-react';
+import { FaThreads, FaXTwitter } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
 
-// Custom X (Twitter) Icon
-const XIcon = ({ size = 24 }) => (
-    <svg
-        width={size}
-        height={size}
-        viewBox="0 0 24 24"
-        fill="currentColor"
-    >
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-);
+// Wrappers for react-icons to match lucide icon interface
+const ThreadsIcon = ({ size = 24 }) => <FaThreads size={size} />;
+const XIcon = ({ size = 24 }) => <FaXTwitter size={size} />;
 
 const Footer = () => {
     const socialLinks = [
         { icon: Mail, href: 'mailto:albaniarzaid24@gmail.com', label: 'Email' },
         { icon: Linkedin, href: 'https://www.linkedin.com/in/arzaidalbani/', label: 'LinkedIn' },
         { icon: Instagram, href: 'https://www.instagram.com/arzaidlbn/', label: 'Instagram' },
+        { icon: ThreadsIcon, href: 'https://www.threads.com/@arzaidlbn', label: 'Threads' },
         { icon: Github, href: 'https://github.com/arzaidalbani14', label: 'GitHub' },
         { icon: XIcon, href: 'https://x.com/mind_minning', label: 'X' },
     ];
