@@ -3,6 +3,42 @@ import { motion } from 'framer-motion';
 import profileImage from '../../assets/images/profile/profile.jpg';
 
 const Hero = () => {
+    // Custom smooth scroll function for cross-browser compatibility
+    const smoothScrollTo = (targetPosition, duration = 800) => {
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        let startTime = null;
+
+        const easeInOutCubic = (t) => {
+            return t < 0.5
+                ? 4 * t * t * t
+                : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        };
+
+        const animation = (currentTime) => {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            const ease = easeInOutCubic(progress);
+
+            window.scrollTo(0, startPosition + distance * ease);
+
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            }
+        };
+
+        requestAnimationFrame(animation);
+    };
+
+    const handleScrollTo = (e, selector) => {
+        e.preventDefault();
+        const element = document.querySelector(selector);
+        if (element) {
+            const offsetTop = element.offsetTop - 80;
+            smoothScrollTo(offsetTop);
+        }
+    };
 
     return (
         <section id="#" className="min-h-[600px] py-32 flex items-center justify-center overflow-hidden relative">
@@ -71,14 +107,7 @@ const Hero = () => {
                         >
                             <motion.a
                                 href="#contact"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    const element = document.querySelector('#contact');
-                                    if (element) {
-                                        const offsetTop = element.offsetTop - 80;
-                                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                                    }
-                                }}
+                                onClick={(e) => handleScrollTo(e, '#contact')}
                                 whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(0, 153, 144, 0.2)" }}
                                 whileTap={{ scale: 0.95 }}
                                 className="px-8 py-3 bg-accent text-background rounded-full font-semibold border-2 border-transparent hover:bg-transparent hover:text-accent hover:border-accent transition-all duration-300 cursor-pointer"
@@ -87,14 +116,7 @@ const Hero = () => {
                             </motion.a>
                             <motion.a
                                 href="#projects"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    const element = document.querySelector('#projects');
-                                    if (element) {
-                                        const offsetTop = element.offsetTop - 80;
-                                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                                    }
-                                }}
+                                onClick={(e) => handleScrollTo(e, '#projects')}
                                 whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(225, 255, 187, 0.2)" }}
                                 whileTap={{ scale: 0.95 }}
                                 className="px-8 py-3 bg-transparent text-primary border-2 border-primary rounded-full font-semibold hover:bg-primary hover:text-background transition-all duration-300 cursor-pointer"

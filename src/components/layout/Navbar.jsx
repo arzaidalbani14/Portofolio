@@ -19,15 +19,43 @@ const Navbar = () => {
         { icon: Github, href: 'https://github.com/arzaidalbani14' },
     ];
 
+    // Custom smooth scroll function for cross-browser compatibility
+    const smoothScrollTo = (targetPosition, duration = 800) => {
+        const startPosition = window.pageYOffset;
+        const distance = targetPosition - startPosition;
+        let startTime = null;
+
+        const easeInOutCubic = (t) => {
+            return t < 0.5
+                ? 4 * t * t * t
+                : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        };
+
+        const animation = (currentTime) => {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            const ease = easeInOutCubic(progress);
+
+            window.scrollTo(0, startPosition + distance * ease);
+
+            if (timeElapsed < duration) {
+                requestAnimationFrame(animation);
+            }
+        };
+
+        requestAnimationFrame(animation);
+    };
+
     const handleNavClick = (e, href) => {
         e.preventDefault();
         if (href === '#') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            smoothScrollTo(0);
         } else {
             const element = document.querySelector(href);
             if (element) {
                 const offsetTop = element.offsetTop - 80;
-                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                smoothScrollTo(offsetTop);
             }
         }
         setIsOpen(false);
