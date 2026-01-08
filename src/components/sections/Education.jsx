@@ -26,8 +26,33 @@ const Education = () => {
                         viewport={{ once: true }}
                         className="flex flex-col md:flex-row items-center justify-center gap-12 relative z-10"
                     >
-                        {/* Left Content */}
-                        <div className="flex-1 text-right space-y-2">
+                        {/* Left Content / Logo */}
+                        <div className="flex-1 flex justify-center md:justify-end">
+                            <a
+                                href="https://unj.ac.id/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <motion.div
+                                    whileHover={{ scale: 1.1, transition: { duration: 0.15 } }}
+                                    className="w-80 h-80 bg-secondary/10 rounded-full flex items-center justify-center overflow-hidden border-8 border-secondary/20 shadow-inner cursor-pointer"
+                                >
+                                    <img
+                                        src={univLogo}
+                                        alt="State University of Jakarta Logo"
+                                        className="w-64 h-64 object-contain"
+                                    />
+                                </motion.div>
+                            </a>
+                        </div>
+
+                        {/* Center Divider (Desktop) */}
+                        <div className="hidden md:flex flex-col items-center self-stretch">
+                            <div className="w-0.5 h-full min-h-[200px] bg-accent/50" />
+                        </div>
+
+                        {/* Right Content / Text */}
+                        <div className="flex-1 text-left space-y-2">
                             <h3 className="text-lg md:text-xl font-medium text-gray-400">Degree</h3>
                             <h2 className="text-2xl md:text-3xl font-bold text-primary">Bachelor of Science
                                 in Informatics and Computer Engineering Education</h2>
@@ -40,35 +65,6 @@ const Education = () => {
 
                             <h3 className="text-lg md:text-xl font-medium text-gray-400 mt-6">Expected Graduation Year</h3>
                             <h2 className="text-2xl md:text-3xl font-bold text-primary">2027</h2>
-                        </div>
-
-                        {/* Center Divider (Desktop) */}
-                        <div className="hidden md:flex flex-col items-center">
-                            <div className="w-1 h-20 bg-primary/20" />
-                            <div className="p-4 bg-secondary/30 rounded-full border-4 border-background shadow-xl z-10 backdrop-blur-sm">
-                                <GraduationCap size={40} className="text-primary" />
-                            </div>
-                            <div className="w-1 h-20 bg-primary/20" />
-                        </div>
-
-                        {/* Right Content / Logo */}
-                        <div className="flex-1 flex justify-center md:justify-start">
-                            <a
-                                href="https://unj.ac.id/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <motion.div
-                                    whileHover={{ scale: 1.1, transition: { duration: 0.15 } }}
-                                    className="w-64 h-64 bg-secondary/10 rounded-full flex items-center justify-center overflow-hidden border-8 border-secondary/20 shadow-inner cursor-pointer"
-                                >
-                                    <img
-                                        src={univLogo}
-                                        alt="State University of Jakarta Logo"
-                                        className="w-48 h-48 object-contain"
-                                    />
-                                </motion.div>
-                            </a>
                         </div>
                     </motion.div>
                 </div>
