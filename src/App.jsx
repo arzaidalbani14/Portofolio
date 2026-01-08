@@ -9,7 +9,7 @@ import BackgroundLines from './components/common/BackgroundLines';
 
 function App() {
     return (
-        <div className="font-sans text-primary custom-cursor">
+        <div className="font-sans text-primary custom-cursor overflow-x-hidden">
             <BackgroundLines />
 
             <div className="relative z-10">
